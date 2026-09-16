@@ -79,7 +79,7 @@ page_css = """
  * - No decorative color or shading; black text and rules only. Redlines to
  *   the proposed rule text use underline for insertions (no color).
  */
-@page {
+@page normal {
     size: letter;
     margin: 1in;
     @bottom-center {
@@ -98,13 +98,34 @@ page_css = """
         margin-top: 6pt;
     }
 }
+/* Wide tables (e.g. Table 1's six columns) get their own landscape-oriented
+   page so columns have room to breathe instead of cramming into a 6.5in
+   portrait text width across three pages. Content must explicitly declare
+   `page: normal` (on body) so that whatever follows a `page: landscape`
+   block returns to a fresh portrait page -- without it, WeasyPrint just
+   keeps appending normal-flow content onto the last-used page orientation. */
+@page landscape {
+    size: letter landscape;
+    margin: 1in;
+    @bottom-center {
+        content: counter(page);
+        font-family: "Times New Roman", Times, serif;
+        font-size: 12pt;
+    }
+    @footnote {
+        border-top: 1px solid #000;
+        padding-top: 6pt;
+        margin-top: 6pt;
+    }
+}
+body { page: normal; orphans: 2; widows: 2; }
+.landscape-table { page: landscape; }
 html {
     font-family: "Times New Roman", Times, serif;
     font-size: 12pt;
     line-height: 2;
     color: #000;
 }
-body { orphans: 2; widows: 2; }
 h1, h2, h3 { font-family: "Times New Roman", Times, serif; font-weight: bold; margin: 0; }
 
 /* Default h2 = roman-numeral section headings (I.-VIII.): left-aligned, bold, upper case */
@@ -151,7 +172,18 @@ p { margin: 0; text-align: left; text-indent: 0.5in; }
    the very first paragraph in the front matter. */
 .frontmatter > p:first-child { text-align: center; font-weight: bold; }
 li p { text-align: left; }
+/* Table caption: the bold "Table N. ..." paragraph immediately preceding
+   a table, centered and not first-line-indented like ordinary body text. */
+.landscape-table > p:first-child {
+    text-indent: 0;
+    text-align: center;
+    margin-bottom: 8pt;
+}
 table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 12pt; line-height: 1.3; }
+/* Never split a single row's cells across a page break -- without this, a
+   row can leave some cells' content on one page and the rest blank on the
+   next. */
+tr { break-inside: avoid; page-break-inside: avoid; }
 table th, table td { border: 1px solid #000; padding: 4pt 6pt; vertical-align: top; text-align: left; }
 table th { font-weight: bold; }
 /* First table in the doc is the FCC caption block -- render borderless, per convention */

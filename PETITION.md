@@ -92,7 +92,11 @@ Attn: Chief, Wireless Telecommunications Bureau, Mobility Division
 
 ## V. Comparative Practice: Other Administrations Already Authorize Longer Special Event Call Signs
 
-17\. Exercising the very discretion described above, a number of ITU member administrations comparable to the United States already authorize special event call signs substantially longer and more flexible than the U.S. 1x1 format. The table below summarizes verified practice in six jurisdictions:
+17\. Exercising the very discretion described above, a number of ITU member administrations comparable to the United States already authorize special event call signs substantially longer and more flexible than the U.S. 1x1 format. Table 1 below summarizes verified practice in six jurisdictions:
+
+<div class="landscape-table" markdown="1">
+
+**Table 1. Comparative Special Event Call Sign Practices in Selected ITU Member Administrations**
 
 | Country | Regulator | Administration model | Format | Typical duration | Fee |
 |---|---|---|---|---|---|
@@ -102,6 +106,8 @@ Attn: Chief, Wireless Telecommunications Bureau, Mobility Division
 | Germany | Bundesnetzagentur (BNetzA) | Issued directly by BNetzA on a defined application form[^27] | Prefix (e.g., DA0/DK0/DL0/DR0) plus a **4-to-7-character** suffix ("4-7-stelliges Sonderrufzeichen") | Up to one year, non-renewable | Nominal administrative fee under the general fee ordinance |
 | Ireland | Commission for Communications Regulation (ComReg) | Issued directly by ComReg[^28] | ComReg's own licensing guidelines state that "distinctive call signs — which may not necessarily comply with the normal rules — may be issued by ComReg for special event stations" | Days to one week of use; licence valid up to 12 months | Not confirmed |
 | Japan | Ministry of Internal Affairs and Communications (MIC), with JARL support[^29] | Licensed directly to the sponsoring organization by MIC | "8J" or "8N" prefixes with suffix formats ranging from 2x1 to 2x5 (e.g., "8J2JAPAN" for major national events) | Tied to event period | Standard station licensing fee schedule |
+
+</div>
 
 18\. Two features of this comparative practice are notable. First, every jurisdiction listed retains the same administrative safeguards the Commission already relies on domestically for the 1x1 system — issuance (directly or through a delegated coordinator) by the licensing authority, a fixed and limited period of validity, and a requirement that the temporary call sign be used only for the stated event. Second, none of these jurisdictions has reported that longer special event formats have caused interference, database confusion, or misidentification problems; to the contrary, several (the United Kingdom's "Special SES" format and Japan's practice for milestone national events) were adopted specifically to allow the call sign itself to communicate the anniversary or event being commemorated — the very flexibility the current U.S. 1x1 format forecloses.
 
