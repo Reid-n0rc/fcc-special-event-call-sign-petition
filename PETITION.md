@@ -1,7 +1,7 @@
 # Petition for Rulemaking
 
-**Before the**
-**FEDERAL COMMUNICATIONS COMMISSION**
+**Before the**<br>
+**FEDERAL COMMUNICATIONS COMMISSION**<br>
 **Washington, D.C. 20554**
 
 | | |
@@ -13,16 +13,16 @@
 
 ## PETITION FOR RULE MAKING
 
-To: The Secretary, Federal Communications Commission
-Via: Office of the Secretary / ECFS
+To: The Secretary, Federal Communications Commission<br>
+Via: Office of the Secretary / ECFS<br>
 Attn: Chief, Wireless Telecommunications Bureau, Mobility Division
 
 ---
 
 **Petitioner:** Reid Crowe, a United States federally licensed amateur radio operator (N0RC, Amateur Extra Class), respectfully petitions the Federal Communications Commission ("Commission" or "FCC"), pursuant to 5 U.S.C. § 553(e) and 47 C.F.R. § 1.401, to amend 47 C.F.R. §§ 97.3(a)(11)(iii) and 97.119(d) to authorize additional, longer special event amateur radio call sign formats beyond the single "one-by-one" ("1x1") format that the Commission's rules currently permit.
 
-Reid Crowe, N0RC
-6362 Payne St.
+Reid Crowe, N0RC<br>
+6362 Payne St.<br>
 Shawnee, KS 66226
 
 ---
@@ -141,10 +141,11 @@ Shawnee, KS 66226
 
 Respectfully submitted,
 
-Reid Crowe, N0RC
-Amateur Extra Class
-6362 Payne St.
+Reid Crowe, N0RC<br>
+Amateur Extra Class<br>
+6362 Payne St.<br>
 Shawnee, KS 66226
+
 *[Date to be added prior to filing]*
 
 ---
