@@ -144,6 +144,9 @@ p { margin: 0; text-align: left; text-indent: 0.5in; }
    numbered-paragraph body is double-spaced. */
 .frontmatter, .frontmatter p, .signature, .signature p { line-height: 1.15; }
 .frontmatter p, .signature p, blockquote p, li p { text-indent: 0; }
+/* Extra breathing room between the closing argument paragraph and
+   "Respectfully submitted," -- the signature block's first line. */
+.signature > p:first-child { margin-top: 2em; }
 /* "Before the / FEDERAL COMMUNICATIONS COMMISSION / Washington, DC 20554" --
    the very first paragraph in the front matter. */
 .frontmatter > p:first-child { text-align: center; font-weight: bold; }
