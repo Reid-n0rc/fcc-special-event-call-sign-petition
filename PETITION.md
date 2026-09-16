@@ -4,12 +4,12 @@ Before the<br>
 FEDERAL COMMUNICATIONS COMMISSION<br>
 Washington, DC 20554
 
-| | |
-|---|---|
-| In the Matter of | ) |
-| | ) |
-| Amendment of Part 97 of the Commission's Rules to Authorize Expanded Special Event Amateur Radio Call Sign Formats | ) RM-\_\_\_\_ |
-| | ) |
+<table>
+<tr><td>In the Matter of</td><td>)</td></tr>
+<tr><td></td><td>)</td></tr>
+<tr><td>Amendment of Part 97 of the Commission's Rules to Authorize Expanded Special Event Amateur Radio Call Sign Formats</td><td>) RM-____<br>)<br>)</td></tr>
+<tr><td></td><td>)</td></tr>
+</table>
 
 ## PETITION FOR RULE MAKING
 
