@@ -9,7 +9,7 @@ This repository contains a draft Petition for Rulemaking asking the Federal Comm
 
 This is a **draft** prepared with AI research assistance. Before filing with the FCC:
 
-1. Complete the petitioner's name, call sign, license class, mailing address, and signature/date (placeholders are marked in the document).
+1. Add the filing date (petitioner name, call sign N0RC, Amateur Extra Class, and mailing address are already filled in).
 2. Independently re-verify every citation against primary sources (eCFR.gov, docs.fcc.gov, itu.int, and the cited national regulators) — several citations in the research process were flagged as needing direct confirmation (see research notes for exact fee figures for Australia and Germany, and for New Zealand/South Africa practice, which was not verified to the same standard as the other jurisdictions and was excluded from the final draft).
 3. Run a full-text search of the FCC's Electronic Comment Filing System (ECFS) at fcc.gov/ecfs to confirm no other pending or resolved petition addresses this exact request.
 4. Have the final draft reviewed by a licensed attorney before submission. This document was prepared by an AI assistant and does not constitute legal advice.

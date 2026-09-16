@@ -19,9 +19,11 @@ Attn: Chief, Wireless Telecommunications Bureau, Mobility Division
 
 ---
 
-**Petitioner:** Reid Crowe, a United States federally licensed amateur radio operator ([CALL SIGN], [LICENSE CLASS]), respectfully petitions the Federal Communications Commission ("Commission" or "FCC"), pursuant to 5 U.S.C. § 553(e) and 47 C.F.R. § 1.401, to amend 47 C.F.R. §§ 97.3(a)(11)(iii) and 97.119(d) to authorize additional, longer special event amateur radio call sign formats beyond the single "one-by-one" ("1x1") format that the Commission's rules currently permit.
+**Petitioner:** Reid Crowe, a United States federally licensed amateur radio operator (N0RC, Amateur Extra Class), respectfully petitions the Federal Communications Commission ("Commission" or "FCC"), pursuant to 5 U.S.C. § 553(e) and 47 C.F.R. § 1.401, to amend 47 C.F.R. §§ 97.3(a)(11)(iii) and 97.119(d) to authorize additional, longer special event amateur radio call sign formats beyond the single "one-by-one" ("1x1") format that the Commission's rules currently permit.
 
-*[Petitioner's mailing address and contact information to be completed prior to filing, per 47 C.F.R. §§ 1.49, 1.52.]*
+Reid Crowe, N0RC
+6362 Payne St.
+Shawnee, KS 66226
 
 ---
 
@@ -131,8 +133,11 @@ Attn: Chief, Wireless Telecommunications Bureau, Mobility Division
 
 Respectfully submitted,
 
-Reid Crowe
-*[Call sign, license class, mailing address, and date to be added prior to filing]*
+Reid Crowe, N0RC
+Amateur Extra Class
+6362 Payne St.
+Shawnee, KS 66226
+*[Date to be added prior to filing]*
 
 ---
 
