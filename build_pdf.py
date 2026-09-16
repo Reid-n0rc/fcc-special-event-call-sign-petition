@@ -107,9 +107,11 @@ h2 {
 /* Within the front matter, the only two h2s are the doc title and "Table of Contents",
    both centered -- override the default left/uppercase section-heading style for them. */
 .frontmatter h2:nth-of-type(1) {
-    font-weight: normal;
+    font-weight: bold;
     text-align: center;
     text-transform: none;
+    margin-top: 2.5em;
+    margin-bottom: 2.5em;
 }
 .frontmatter h2:nth-of-type(2) {
     text-align: center;
@@ -142,7 +144,7 @@ body > div.frontmatter > table:first-of-type td {
     padding: 0;
 }
 body > div.frontmatter > table:first-of-type thead { display: none; }
-body > div.frontmatter > table:first-of-type td:first-child { width: 75%; }
+body > div.frontmatter > table:first-of-type td:first-child { width: 50%; }
 blockquote {
     margin: 12pt 0.5in;
     padding-left: 12pt;
