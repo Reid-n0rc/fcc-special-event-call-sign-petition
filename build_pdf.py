@@ -47,23 +47,33 @@ html_body = re.sub(
 )
 
 page_css = """
+/*
+ * Standard legal / FCC filing formatting:
+ * - Letter size, printed text area not exceeding 6.5 x 9.5 in (1in margins
+ *   give a 6.5 x 9 in text area, within that limit).
+ * - 12pt minimum, including footnotes.
+ * - Double-spaced body text (line-height 2 on a 12pt font gives 24pt of
+ *   line pitch, well above the 7/32in (~15.75pt) minimum).
+ * - Left-aligned, not justified.
+ * - No decorative color or shading; black text and rules only.
+ */
 @page {
     size: letter;
-    margin: 1in 1in 1in 1in;
+    margin: 1in;
     @bottom-center {
         content: counter(page);
         font-family: "Times New Roman", Times, serif;
-        font-size: 11pt;
+        font-size: 12pt;
     }
 }
 html {
     font-family: "Times New Roman", Times, serif;
     font-size: 12pt;
-    line-height: 1.5;
+    line-height: 2;
     color: #000;
 }
 body { orphans: 2; widows: 2; }
-h1, h2, h3 { font-family: "Times New Roman", Times, serif; }
+h1, h2, h3 { font-family: "Times New Roman", Times, serif; font-weight: bold; }
 h1 {
     font-size: 13pt;
     text-align: center;
@@ -73,19 +83,17 @@ h2 {
     font-size: 12pt;
     text-align: center;
     margin-top: 1.5em;
-    text-decoration: underline;
 }
 h3 {
     font-size: 12pt;
-    font-style: italic;
     margin-top: 1em;
 }
-p { margin: 0 0 12pt 0; text-align: justify; }
+p { margin: 0 0 12pt 0; text-align: left; }
 li p { text-align: left; }
-table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 10.5pt; }
+table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 12pt; line-height: 1.3; }
 table th, table td { border: 1px solid #000; padding: 4pt 6pt; vertical-align: top; text-align: left; }
 table th { font-weight: bold; }
-/* First table in the doc is the FCC caption block -- render borderless */
+/* First table in the doc is the FCC caption block -- render borderless, per convention */
 body > table:first-of-type, body > table:first-of-type td {
     border: none;
     padding: 0;
@@ -94,28 +102,29 @@ body > table:first-of-type td:first-child { width: 75%; }
 blockquote {
     margin: 12pt 24pt;
     padding-left: 12pt;
-    border-left: 2px solid #999;
-    font-size: 11.5pt;
+    border-left: 1px solid #000;
+    font-size: 12pt;
 }
-hr { border: none; border-top: 1px solid #999; margin: 18pt 0; }
+hr { border: none; border-top: 1px solid #000; margin: 18pt 0; }
 strong { font-weight: bold; }
 em { font-style: italic; }
 ol, ul { margin: 0 0 12pt 0; }
 
-/* Real page-bottom footnotes */
+/* Real page-bottom footnotes -- 12pt minimum applies to footnotes too */
 .fn {
     float: footnote;
-    font-size: 10pt;
+    font-size: 12pt;
+    line-height: 1.3;
 }
 ::footnote-marker {
     content: counter(footnote);
-    font-size: 10pt;
+    font-size: 12pt;
     vertical-align: super;
     line-height: 0;
 }
 ::footnote-call {
     content: counter(footnote);
-    font-size: 8pt;
+    font-size: 12pt;
     vertical-align: super;
     line-height: 0;
 }
