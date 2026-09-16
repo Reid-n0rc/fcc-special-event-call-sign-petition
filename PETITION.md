@@ -155,7 +155,7 @@ Reid Crowe, N0RC<br>
 Amateur Extra Class<br>
 6362 Payne St.<br>
 Shawnee, KS 66226<br>
-[Email address]
+reid.crowe@gmail.com
 
 *[Date to be added prior to filing]*
 
