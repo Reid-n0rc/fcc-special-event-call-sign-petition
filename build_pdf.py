@@ -127,6 +127,9 @@ p { margin: 0; text-align: left; text-indent: 0.5in; }
    numbered-paragraph body is double-spaced. */
 .frontmatter, .frontmatter p, .signature, .signature p { line-height: 1.15; }
 .frontmatter p, .signature p, blockquote p, li p { text-indent: 0; }
+/* "Before the / FEDERAL COMMUNICATIONS COMMISSION / Washington, DC 20554" --
+   the very first paragraph in the front matter. */
+.frontmatter > p:first-child { text-align: center; font-weight: bold; }
 li p { text-align: left; }
 table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 12pt; line-height: 1.3; }
 table th, table td { border: 1px solid #000; padding: 4pt 6pt; vertical-align: top; text-align: left; }
