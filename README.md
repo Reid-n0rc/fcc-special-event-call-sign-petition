@@ -2,7 +2,9 @@
 
 This repository contains a draft Petition for Rulemaking asking the Federal Communications Commission to amend 47 C.F.R. Part 97 to authorize a second, longer amateur radio special event call sign format, in addition to the existing "1x1" format, bringing U.S. practice into alignment with other ITU member administrations.
 
-- [`PETITION.md`](./PETITION.md) — the draft petition, in FCC filing format with footnoted citations.
+- [`PETITION.md`](./PETITION.md) — the source of truth: the draft petition, in FCC filing format with footnoted citations. Edit this file.
+- [`Petition_for_Rulemaking.pdf`](./Petition_for_Rulemaking.pdf) — a paginated PDF rendering of the petition, matching real FCC filing conventions (letter size, centered caption, serif body text, numbered pages, and true page-bottom footnotes). Generated from `PETITION.md`.
+- [`build_pdf.py`](./build_pdf.py) — regenerates the PDF from `PETITION.md`. Run `pip install markdown weasyprint && python3 build_pdf.py` after editing the markdown source, then commit both files.
 - [`AGENTS.md`](./AGENTS.md) — the persona and task instructions used to produce this draft, for any AI agent that continues this work.
 
 ## Status
