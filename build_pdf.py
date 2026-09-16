@@ -5,10 +5,14 @@ import weasyprint
 with open("PETITION.md") as f:
     src = f.read()
 
-# Convert markdown (with footnotes + tables extensions) to HTML.
+# Convert markdown (with footnotes + tables extensions) to HTML. "toc" is used
+# only for its side effect of giving headings predictable slug ids, which the
+# hand-written Table of Contents links against for real, WeasyPrint-computed
+# page numbers (via CSS target-counter()) -- its own generated <div class="toc">
+# output is unused and stripped below.
 html_body = markdown.markdown(
     src,
-    extensions=["footnotes", "tables"],
+    extensions=["footnotes", "tables", "toc", "md_in_html"],
     extension_configs={"footnotes": {"BACKLINK_TEXT": ""}},
 )
 
@@ -29,8 +33,9 @@ if footnote_div_match:
     html_body = html_body[: footnote_div_match.start()]
 
 # Drop the now-empty "## Footnotes" heading (and preceding <hr>) that led into the
-# stripped endnote list.
-html_body = re.sub(r'(<hr\s*/?>\s*)?<h2>Footnotes</h2>\s*$', "", html_body.rstrip())
+# stripped endnote list. The "toc" extension adds an id="..." attribute to every
+# heading, so match that loosely rather than assuming a bare <h2>.
+html_body = re.sub(r'(<hr\s*/?>\s*)?<h2[^>]*>Footnotes</h2>\s*$', "", html_body.rstrip())
 
 # Replace each inline footnote reference marker
 #   <sup id="fnref:N"><a class="footnote-ref" href="#fn:N">N</a></sup>
@@ -48,14 +53,21 @@ html_body = re.sub(
 
 page_css = """
 /*
- * Standard legal / FCC filing formatting:
+ * Formatting modeled on a real FCC Petition for Rulemaking / Request for
+ * Waiver filing (Hogan Lovells, for the Association of American Railroads),
+ * plus standard legal-filing rules:
  * - Letter size, printed text area not exceeding 6.5 x 9.5 in (1in margins
  *   give a 6.5 x 9 in text area, within that limit).
  * - 12pt minimum, including footnotes.
  * - Double-spaced body text (line-height 2 on a 12pt font gives 24pt of
  *   line pitch, well above the 7/32in (~15.75pt) minimum).
- * - Left-aligned, not justified.
- * - No decorative color or shading; black text and rules only.
+ * - Left-aligned, not justified; first-line-indented paragraphs, no
+ *   inter-paragraph gap (spacing comes from the double line height alone).
+ * - Caption in plain (non-bold) type; roman-numeral section headings
+ *   left-aligned, bold, upper case; lettered subheadings left-aligned,
+ *   bold, title case, indented.
+ * - No decorative color or shading; black text and rules only. Redlines to
+ *   the proposed rule text use underline for insertions (no color).
  */
 @page {
     size: letter;
@@ -73,34 +85,46 @@ html {
     color: #000;
 }
 body { orphans: 2; widows: 2; }
-h1, h2, h3 { font-family: "Times New Roman", Times, serif; font-weight: bold; }
-h1 {
-    font-size: 13pt;
-    text-align: center;
-    margin-top: 0;
-}
+h1, h2, h3 { font-family: "Times New Roman", Times, serif; font-weight: bold; margin: 0; }
+
+/* Default h2 = roman-numeral section headings (I.-VIII.): left-aligned, bold, upper case */
 h2 {
     font-size: 12pt;
-    text-align: center;
+    text-align: left;
+    text-transform: uppercase;
     margin-top: 1.5em;
 }
+/* Within the front matter, the only two h2s are the doc title and "Table of Contents",
+   both centered -- override the default left/uppercase section-heading style for them. */
+.frontmatter h2:nth-of-type(1) {
+    font-weight: normal;
+    text-align: center;
+    text-transform: none;
+}
+.frontmatter h2:nth-of-type(2) {
+    text-align: center;
+}
+/* Lettered subheadings: left-aligned, bold, title case, indented */
 h3 {
     font-size: 12pt;
+    text-align: left;
+    margin-left: 0.5in;
     margin-top: 1em;
 }
-p { margin: 0 0 12pt 0; text-align: left; }
+p { margin: 0; text-align: left; text-indent: 0.5in; }
+.frontmatter p, blockquote p, li p { text-indent: 0; }
 li p { text-align: left; }
 table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 12pt; line-height: 1.3; }
 table th, table td { border: 1px solid #000; padding: 4pt 6pt; vertical-align: top; text-align: left; }
 table th { font-weight: bold; }
 /* First table in the doc is the FCC caption block -- render borderless, per convention */
-body > table:first-of-type, body > table:first-of-type td {
+body > div.frontmatter > table:first-of-type, body > div.frontmatter > table:first-of-type td {
     border: none;
     padding: 0;
 }
-body > table:first-of-type td:first-child { width: 75%; }
+body > div.frontmatter > table:first-of-type td:first-child { width: 75%; }
 blockquote {
-    margin: 12pt 24pt;
+    margin: 12pt 0.5in;
     padding-left: 12pt;
     border-left: 1px solid #000;
     font-size: 12pt;
@@ -108,13 +132,32 @@ blockquote {
 hr { border: none; border-top: 1px solid #000; margin: 18pt 0; }
 strong { font-weight: bold; }
 em { font-style: italic; }
+u { text-decoration: underline; }
 ol, ul { margin: 0 0 12pt 0; }
+
+/* Table of contents: label -- dotted leader -- page number (via target-counter) */
+.toc { margin-top: 1.5em; }
+.toc-entry {
+    display: flex;
+    align-items: flex-end;
+    text-indent: 0;
+    margin: 6pt 0;
+}
+.toc-entry.toc-sub { margin-left: 0.5in; }
+.toc-entry .dots {
+    flex: 1;
+    border-bottom: 1px dotted #000;
+    margin: 0 4px 3px 4px;
+}
+.toc-entry .pagenum { text-decoration: none; color: #000; }
+.toc-entry .pagenum::after { content: target-counter(attr(href), page); }
 
 /* Real page-bottom footnotes -- 12pt minimum applies to footnotes too */
 .fn {
     float: footnote;
     font-size: 12pt;
     line-height: 1.3;
+    text-indent: 0;
 }
 ::footnote-marker {
     content: counter(footnote);
