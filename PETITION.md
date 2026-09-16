@@ -145,6 +145,8 @@ Shawnee, KS 66226
 
 23\. For the foregoing reasons, Petitioner respectfully requests that the Commission institute a rulemaking proceeding to amend 47 C.F.R. §§ 97.3(a)(11)(iii) and 97.119(d) to authorize an additional, longer special event amateur radio call sign format, as set forth above, in order to bring United States practice into alignment with the ITU Radio Regulations and with the practice of comparable foreign administrations.
 
+<div class="signature" markdown="1">
+
 Respectfully submitted,
 
 Reid Crowe, N0RC<br>
@@ -153,6 +155,8 @@ Amateur Extra Class<br>
 Shawnee, KS 66226
 
 *[Date to be added prior to filing]*
+
+</div>
 
 ---
 

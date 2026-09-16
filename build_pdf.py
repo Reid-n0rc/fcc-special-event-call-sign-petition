@@ -39,11 +39,21 @@ html_body = re.sub(r'(<hr\s*/?>\s*)?<h2[^>]*>Footnotes</h2>\s*$', "", html_body.
 
 # Replace each inline footnote reference marker
 #   <sup id="fnref:N"><a class="footnote-ref" href="#fn:N">N</a></sup>
-# with a WeasyPrint CSS float-footnote span carrying the actual footnote text.
+# with (a) a small clickable superscript number that stays inline at the
+# reference point, immediately followed by (b) a span carrying the actual
+# footnote text with float:footnote, which WeasyPrint pulls out of normal
+# flow and places at the bottom of whichever page it lands on. Both the
+# forward reference and the footnote's own number are real <a> links (not
+# CSS-generated counter content), so they're clickable in the PDF and jump
+# to/from each other.
 def replace_ref(m):
     fid = m.group(1)
     text = footnote_texts.get(fid, "")
-    return f'<span class="fn">{text}</span>'
+    return (
+        f'<sup class="fnref"><a href="#fn-{fid}" id="fnref-{fid}">{fid}</a></sup>'
+        f'<span class="fn" id="fn-{fid}">'
+        f'<a class="fnnum" href="#fnref-{fid}">{fid}</a> {text}</span>'
+    )
 
 html_body = re.sub(
     r'<sup id="fnref:([^"]+)"><a class="footnote-ref" href="#fn:[^"]+">\d+</a></sup>',
@@ -112,16 +122,23 @@ h3 {
     margin-top: 1em;
 }
 p { margin: 0; text-align: left; text-indent: 0.5in; }
-.frontmatter p, blockquote p, li p { text-indent: 0; }
+/* Front matter (caption, title block, signature-style intro, TOC) stays
+   single-spaced, like a real filing's cover page -- only the substantive
+   numbered-paragraph body is double-spaced. */
+.frontmatter, .frontmatter p, .signature, .signature p { line-height: 1.15; }
+.frontmatter p, .signature p, blockquote p, li p { text-indent: 0; }
 li p { text-align: left; }
 table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 12pt; line-height: 1.3; }
 table th, table td { border: 1px solid #000; padding: 4pt 6pt; vertical-align: top; text-align: left; }
 table th { font-weight: bold; }
 /* First table in the doc is the FCC caption block -- render borderless, per convention */
-body > div.frontmatter > table:first-of-type, body > div.frontmatter > table:first-of-type td {
+body > div.frontmatter > table:first-of-type,
+body > div.frontmatter > table:first-of-type th,
+body > div.frontmatter > table:first-of-type td {
     border: none;
     padding: 0;
 }
+body > div.frontmatter > table:first-of-type thead { display: none; }
 body > div.frontmatter > table:first-of-type td:first-child { width: 75%; }
 blockquote {
     margin: 12pt 0.5in;
@@ -135,42 +152,48 @@ em { font-style: italic; }
 u { text-decoration: underline; }
 ol, ul { margin: 0 0 12pt 0; }
 
-/* Table of contents: label -- dotted leader -- page number (via target-counter) */
+/* Table of contents: label, dotted leader, page number. Uses WeasyPrint's
+   native leader() generated-content function (CSS Generated Content for
+   Paged Media) rather than a flexbox or table-cell row: those box-layout
+   approaches broke the leader whenever a label wrapped to two lines (the
+   dotted line either vanished or only spanned the last line). leader()
+   flows as part of the same inline run as the wrapping label text, so it
+   naturally continues on whichever line the label text ends on. */
 .toc { margin-top: 1.5em; }
 .toc-entry {
-    display: flex;
-    align-items: flex-end;
     text-indent: 0;
     margin: 6pt 0;
 }
 .toc-entry.toc-sub { margin-left: 0.5in; }
-.toc-entry .dots {
-    flex: 1;
-    border-bottom: 1px dotted #000;
-    margin: 0 4px 3px 4px;
+.toc-entry .dots::after { content: leader(dotted); }
+.toc-entry .pagenum {
+    text-decoration: none;
+    color: #000;
 }
-.toc-entry .pagenum { text-decoration: none; color: #000; }
 .toc-entry .pagenum::after { content: target-counter(attr(href), page); }
 
-/* Real page-bottom footnotes -- 12pt minimum applies to footnotes too */
+/* Real page-bottom footnotes -- 12pt minimum applies to the footnote's
+   substantive text (.fn); the reference numeral itself (.fnref, .fnnum) is
+   a small superscript locator, conventionally smaller than body text in
+   every real filing examined, including the reference filing, and is a
+   real clickable link rather than CSS-generated counter content. */
 .fn {
     float: footnote;
     font-size: 12pt;
     line-height: 1.3;
     text-indent: 0;
 }
-::footnote-marker {
-    content: counter(footnote);
-    font-size: 12pt;
+.fnref a, .fn .fnnum {
+    font-size: 8pt;
     vertical-align: super;
     line-height: 0;
+    text-decoration: none;
+    color: #000;
 }
-::footnote-call {
-    content: counter(footnote);
-    font-size: 12pt;
-    vertical-align: super;
-    line-height: 0;
-}
+.fn .fnnum { margin-right: 3px; }
+/* Suppress WeasyPrint's own auto-generated "1." marker in front of each
+   floated footnote -- .fnnum above is our real, clickable replacement. */
+::footnote-marker { content: normal; }
 """
 
 html_doc = f"<html><head><meta charset='utf-8'><style>{page_css}</style></head><body>{html_body}</body></html>"
