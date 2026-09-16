@@ -1,0 +1,52 @@
+name: Rebuild petition PDF
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "PETITION.md"
+      - "build_pdf.py"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # WeasyPrint needs Pango/Cairo/GDK-Pixbuf at the system level.
+      - name: Install WeasyPrint system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libpango-1.0-0 \
+            libpangocairo-1.0-0 \
+            libgdk-pixbuf2.0-0 \
+            libffi-dev \
+            shared-mime-info \
+            fonts-liberation
+
+      - name: Install Python dependencies
+        run: pip install markdown weasyprint
+
+      - name: Build PDF
+        run: python3 build_pdf.py
+
+      - name: Commit updated PDF if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Petition_for_Rulemaking.pdf
+          if git diff --cached --quiet; then
+            echo "No change to PDF."
+          else
+            git commit -m "Auto-rebuild Petition_for_Rulemaking.pdf from PETITION.md [skip ci]"
+            git push
+          fi
