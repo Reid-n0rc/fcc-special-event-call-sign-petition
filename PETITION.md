@@ -111,13 +111,17 @@ Attn: Chief, Wireless Telecommunications Bureau, Mobility Division
 
 20\. Adopting such a rule would:
 
-    a. Bring United States practice into direct alignment with the United Kingdom, Canada, Australia, Germany, Ireland, and Japan, each of which already permits longer, more descriptive special event call signs administered under comparable safeguards;
+<div class="sublist" markdown="1">
 
-    b. Exercise, rather than fall short of, the flexibility the ITU Radio Regulations already extend to member administrations under No. 19.68A;
+a. Bring United States practice into direct alignment with the United Kingdom, Canada, Australia, Germany, Ireland, and Japan, each of which already permits longer, more descriptive special event call signs administered under comparable safeguards;
 
-    c. Allow U.S. amateur clubs and event organizers to select call signs that meaningfully identify the anniversary, exposition, or commemorated event — for example, a call sign incorporating an anniversary year, as is now common practice among UK and Japanese special event stations — improving public recognition and outreach value of the amateur service; and
+b. Exercise, rather than fall short of, the flexibility the ITU Radio Regulations already extend to member administrations under No. 19.68A;
 
-    d. Impose no cost on, and require no change to, the existing sequential and vanity call sign systems, the existing 1x1 special event system, or the certified coordinators' existing database infrastructure, which need only be extended to track a second format.
+c. Allow U.S. amateur clubs and event organizers to select call signs that meaningfully identify the anniversary, exposition, or commemorated event — for example, a call sign incorporating an anniversary year, as is now common practice among UK and Japanese special event stations — improving public recognition and outreach value of the amateur service; and
+
+d. Impose no cost on, and require no change to, the existing sequential and vanity call sign systems, the existing 1x1 special event system, or the certified coordinators' existing database infrastructure, which need only be extended to track a second format.
+
+</div>
 
 ## VII. Proposed Rule Text
 

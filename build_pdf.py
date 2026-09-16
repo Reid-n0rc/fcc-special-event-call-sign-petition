@@ -134,6 +134,11 @@ h3 {
     margin-top: 1em;
 }
 p { margin: 0; text-align: left; text-indent: 0.5in; }
+/* Lettered sub-items (a., b., ...) under a numbered paragraph, e.g. Section
+   VI's list of consequences. Indented as a block, no further first-line
+   indent since the "a." literal already serves as the marker. */
+.sublist { margin-left: 0.5in; }
+.sublist p { text-indent: 0; }
 /* Front matter (caption, title block, signature-style intro, TOC) stays
    single-spaced, like a real filing's cover page -- only the substantive
    numbered-paragraph body is double-spaced. */
