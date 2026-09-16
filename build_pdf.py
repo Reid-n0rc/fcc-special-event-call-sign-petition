@@ -87,6 +87,16 @@ page_css = """
         font-family: "Times New Roman", Times, serif;
         font-size: 12pt;
     }
+    /* Rule separating the footnote area from the body text above it, drawn
+       once per page regardless of how many footnotes land there. Do not
+       set a width here -- the @footnote box is the actual footnote content
+       area, not just a decorative header, and constraining its width also
+       constrains (and badly wraps) every footnote's text. */
+    @footnote {
+        border-top: 1px solid #000;
+        padding-top: 6pt;
+        margin-top: 6pt;
+    }
 }
 html {
     font-family: "Times New Roman", Times, serif;
@@ -199,6 +209,12 @@ ol, ul { margin: 0 0 12pt 0; }
 /* Suppress WeasyPrint's own auto-generated "1." marker in front of each
    floated footnote -- .fnnum above is our real, clickable replacement. */
 ::footnote-marker { content: normal; }
+/* Also suppress WeasyPrint's auto-generated call marker at the reference
+   point itself -- without this, a second, unstyled, plain-sized number
+   renders immediately after our real .fnref link at every single
+   reference (this was the actual cause of the doubled-up superscript
+   numbers throughout the document, not just in tables). */
+::footnote-call { content: normal; }
 """
 
 html_doc = f"<html><head><meta charset='utf-8'><style>{page_css}</style></head><body>{html_body}</body></html>"
