@@ -149,10 +149,13 @@ Shawnee, KS 66226
 
 Respectfully submitted,
 
+<u>/s/ Reid Crowe</u>
+
 Reid Crowe, N0RC<br>
 Amateur Extra Class<br>
 6362 Payne St.<br>
-Shawnee, KS 66226
+Shawnee, KS 66226<br>
+[Email address]
 
 *[Date to be added prior to filing]*
 
