@@ -28,6 +28,7 @@ Any agent continuing this work should maintain that framing: write as communicat
 ## Repository conventions
 
 - `CLAUDE.md` in this repository's root should contain the line `@AGENTS.md`, per explicit instruction, so that Claude Code sessions opened in this repo load this persona/context file automatically.
+- **Do not commit or push without the user reviewing the changes first**, per explicit instruction. Make the edits, rebuild the PDF, run the verification checks (footnote/paragraph consistency, etc.), and show the user what changed — then wait for explicit approval before running `git commit`/`git push`. This reverses the workflow used earlier in this project's history, where each fix was committed and pushed immediately; that speed came at the cost of several errors (footnote-renumbering collisions, a mistranscribed citation) reaching `main` before being caught. Review-before-push is the standing rule going forward.
 
 ## Formatting and style conventions (PDF)
 
