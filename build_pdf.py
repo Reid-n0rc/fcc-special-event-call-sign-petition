@@ -260,7 +260,8 @@ ol, ul { margin: 0 0 12pt 0; }
        next page with it, instead of leaving the note a page behind. */
     footnote-policy: line;
     font-size: 12pt;
-    line-height: 1.3;
+    /* 1.4 leaves at least 1/16 in. between footnote lines (47 CFR 1.49(a)). */
+    line-height: 1.4;
     text-indent: 0;
 }
 /* Citation URLs inside footnote text: real links, but plain black text with
