@@ -53,15 +53,19 @@ html_body = re.sub(r'(<hr\s*/?>\s*)?<h2[^>]*>Footnotes</h2>\s*$', "", html_body.
 
 # Replace each inline footnote reference marker
 #   <sup id="fnref:N"><a class="footnote-ref" href="#fn:N">N</a></sup>
-# with (a) a small clickable superscript number that stays inline at the
-# reference point, immediately followed by (b) a span carrying the actual
-# footnote text with float:footnote, which WeasyPrint pulls out of normal
-# flow and places at the bottom of whichever page it lands on. Both the
-# forward reference and the footnote's own number are real <a> links (not
-# CSS-generated counter content), so they're clickable in the PDF and jump
-# to/from each other.
+# (python-markdown gives repeat citations of the same note ids fnref2:N,
+# fnref3:N, ...) with a small clickable superscript number. The first
+# citation is also followed by a span carrying the footnote text with
+# float:footnote, which WeasyPrint places at the bottom of that page; later
+# citations reuse the same number and link to that note, so the text prints
+# once. The note's own number links back to its first citation.
+cited = set()
+
 def replace_ref(m):
     fid = m.group(1)
+    if fid in cited:
+        return f'<sup class="fnref"><a href="#fn-{fid}">{fid}</a></sup>'
+    cited.add(fid)
     text = footnote_texts.get(fid, "")
     return (
         f'<sup class="fnref"><a href="#fn-{fid}" id="fnref-{fid}">{fid}</a></sup>'
@@ -70,10 +74,13 @@ def replace_ref(m):
     )
 
 html_body = re.sub(
-    r'<sup id="fnref:([^"]+)"><a class="footnote-ref" href="#fn:[^"]+">\d+</a></sup>',
+    r'<sup id="fnref\d*:([^"]+)"><a class="footnote-ref" href="#fn:[^"]+">\d+</a></sup>',
     replace_ref,
     html_body,
 )
+unconverted = re.findall(r'class="footnote-ref"', html_body)
+if unconverted:
+    raise SystemExit(f"{len(unconverted)} footnote references were not converted")
 
 page_css = """
 /*
