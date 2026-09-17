@@ -6,6 +6,7 @@ This repository contains a draft Petition for Rulemaking asking the Federal Comm
 - [`Petition_for_Rulemaking.pdf`](./Petition_for_Rulemaking.pdf) — a paginated PDF rendering of the petition, matching real FCC filing conventions (letter size, centered caption, serif body text, numbered pages, and true page-bottom footnotes). Generated from `PETITION.md`.
 - [`build_pdf.py`](./build_pdf.py) — regenerates the PDF from `PETITION.md`. Run `pip install markdown weasyprint && python3 build_pdf.py` after editing the markdown source, then commit both files.
 - [`AGENTS.md`](./AGENTS.md) — the persona and task instructions used to produce this draft, for any AI agent that continues this work.
+- [`FORMATTING.md`](./FORMATTING.md) — the detailed PDF formatting/style spec referenced by `AGENTS.md`, including several conventions that exist specifically to prevent bugs that shipped once (doubled footnote numbers, unclickable footnote links, a list silently rendering as a code block).
 - [`sources/`](./sources/) — primary-source PDFs (FCC orders, ARRL's actual 2010 comments) the petitioner supplied during drafting, so citations can be checked against the real filings. See `sources/README.md` for what each one is and where it's cited.
 
 ## Status
