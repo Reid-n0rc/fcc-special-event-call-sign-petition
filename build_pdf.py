@@ -32,6 +32,20 @@ if footnote_div_match:
         footnote_texts[fid] = text.strip()
     html_body = html_body[: footnote_div_match.start()]
 
+# Turn every bare "https://..." URL in a footnote's citation text into a real
+# <a href> hyperlink. Without this, the URL is just plain text -- some PDF
+# viewers auto-detect and linkify plain URL text themselves, but that
+# heuristic is unreliable (observed truncating a real citation URL at an
+# underscore in a path segment, losing the actual filename/destination).
+# Rendering the full href explicitly, server-side, is the only way to
+# guarantee the link always points to the complete URL from the citation.
+def linkify(match):
+    url = match.group(0)
+    return f'<a href="{url}">{url}</a>'
+
+for fid in footnote_texts:
+    footnote_texts[fid] = re.sub(r'https?://[^\s)<]+', linkify, footnote_texts[fid])
+
 # Drop the now-empty "## Footnotes" heading (and preceding <hr>) that led into the
 # stripped endnote list. The "toc" extension adds an id="..." attribute to every
 # heading, so match that loosely rather than assuming a bare <h2>.
@@ -238,6 +252,12 @@ ol, ul { margin: 0 0 12pt 0; }
     line-height: 1.3;
     text-indent: 0;
 }
+/* Citation URLs inside footnote text: real links, but plain black text with
+   no underline, matching the document's no-decorative-color rule -- the
+   PDF viewer's own cursor/hover affordance is enough to signal they're
+   clickable. */
+.fn a:not(.fnnum) { color: #000; text-decoration: none; }
+
 .fnref a, .fn .fnnum {
     font-size: 8pt;
     vertical-align: super;
