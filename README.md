@@ -4,6 +4,7 @@ This repository contains a draft Petition for Rulemaking asking the Federal Comm
 
 - [`PETITION.md`](./PETITION.md) — the source of truth: the draft petition, in FCC filing format with footnoted citations. Edit this file.
 - [`Petition_for_Rulemaking.pdf`](./Petition_for_Rulemaking.pdf) — a paginated PDF rendering of the petition, matching real FCC filing conventions (letter size, centered caption, serif body text, numbered pages, and true page-bottom footnotes). Generated from `PETITION.md`.
+- **Web version:** https://reid-n0rc.github.io/fcc-special-event-call-sign-petition/ shows the petition's text as a web page, with clickable footnotes and table of contents, without downloading the PDF. [`build_html.py`](./build_html.py) generates it from `PETITION.md` into `site/` (run `pip install markdown && python3 build_html.py` to preview locally), and the `Publish web version` GitHub Actions workflow rebuilds and deploys it to GitHub Pages whenever `PETITION.md` changes.
 - [`build_pdf.py`](./build_pdf.py) — regenerates the PDF from `PETITION.md`. Run `pip install markdown weasyprint && python3 build_pdf.py` after editing the markdown source, then commit both files.
 - [`count_calls.py`](./count_calls.py) — computes the Table 2 call sign counts from the proposed formats and exclusions (`python3 count_calls.py`); rerun it and update Table 2 and its footnote whenever the formats or exclusions change.
 - [`AGENTS.md`](./AGENTS.md) — the persona and task instructions used to produce this draft, for any AI agent that continues this work.
