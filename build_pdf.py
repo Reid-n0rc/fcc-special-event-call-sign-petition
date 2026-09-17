@@ -98,7 +98,7 @@ page_css = """
     margin: 1in;
     @bottom-center {
         content: counter(page);
-        font-family: "Times New Roman", Times, serif;
+        font-family: "Times New Roman", Times, "Hiragino Mincho ProN", "Hiragino Sans", "Noto Serif CJK JP", "Noto Sans CJK JP", serif;
         font-size: 12pt;
     }
     /* Rule separating the footnote area from the body text above it, drawn
@@ -123,7 +123,7 @@ page_css = """
     margin: 1in;
     @bottom-center {
         content: counter(page);
-        font-family: "Times New Roman", Times, serif;
+        font-family: "Times New Roman", Times, "Hiragino Mincho ProN", "Hiragino Sans", "Noto Serif CJK JP", "Noto Sans CJK JP", serif;
         font-size: 12pt;
     }
     @footnote {
@@ -135,12 +135,12 @@ page_css = """
 body { page: normal; orphans: 2; widows: 2; }
 .landscape-table { page: landscape; }
 html {
-    font-family: "Times New Roman", Times, serif;
+    font-family: "Times New Roman", Times, "Hiragino Mincho ProN", "Hiragino Sans", "Noto Serif CJK JP", "Noto Sans CJK JP", serif;
     font-size: 12pt;
     line-height: 2;
     color: #000;
 }
-h1, h2, h3 { font-family: "Times New Roman", Times, serif; font-weight: bold; margin: 0; }
+h1, h2, h3 { font-family: "Times New Roman", Times, "Hiragino Mincho ProN", "Hiragino Sans", "Noto Serif CJK JP", "Noto Sans CJK JP", serif; font-weight: bold; margin: 0; }
 
 /* Default h2 = roman-numeral section headings (I.-VIII.): left-aligned, bold, upper case */
 h2 {

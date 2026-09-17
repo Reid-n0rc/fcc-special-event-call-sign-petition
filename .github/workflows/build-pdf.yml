@@ -22,6 +22,10 @@ jobs:
           python-version: "3.12"
 
       # WeasyPrint needs Pango/Cairo/GDK-Pixbuf at the system level.
+      # fonts-noto-cjk is needed because some footnote citations quote
+      # non-English text (e.g. Japanese, German) verbatim -- without it,
+      # those characters render as blank boxes since Liberation Serif has
+      # no CJK glyphs.
       - name: Install WeasyPrint system dependencies
         run: |
           sudo apt-get update
@@ -31,7 +35,8 @@ jobs:
             libgdk-pixbuf2.0-0 \
             libffi-dev \
             shared-mime-info \
-            fonts-liberation
+            fonts-liberation \
+            fonts-noto-cjk
 
       - name: Install Python dependencies
         run: pip install markdown weasyprint
