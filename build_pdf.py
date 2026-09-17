@@ -132,7 +132,7 @@ page_css = """
         margin-top: 6pt;
     }
 }
-body { page: normal; orphans: 2; widows: 2; }
+body { page: normal; orphans: ORPHANS; widows: WIDOWS; }
 .landscape-table { page: landscape; }
 html {
     font-family: "Times New Roman", Times, "Hiragino Mincho ProN", "Hiragino Sans", "Noto Serif CJK JP", "Noto Sans CJK JP", serif;
@@ -188,7 +188,8 @@ p { margin: 0; text-align: left; text-indent: 0.5in; }
 li p { text-align: left; }
 /* Table caption: the bold "Table N. ..." paragraph immediately preceding
    a table, centered and not first-line-indented like ordinary body text. */
-.landscape-table > p:first-child {
+.landscape-table > p:first-child,
+.table-block > p:first-child {
     text-indent: 0;
     text-align: center;
     margin-bottom: 8pt;
@@ -248,6 +249,9 @@ ol, ul { margin: 0 0 12pt 0; }
    real clickable link rather than CSS-generated counter content. */
 .fn {
     float: footnote;
+    /* If the note won't fit below its calling line, move that line to the
+       next page with it, instead of leaving the note a page behind. */
+    footnote-policy: line;
     font-size: 12pt;
     line-height: 1.3;
     text-indent: 0;
@@ -280,11 +284,38 @@ ol, ul { margin: 0 0 12pt 0; }
 ::footnote-call { content: normal; }
 """
 
-html_doc = f"<html><head><meta charset='utf-8'><style>{page_css}</style></head><body>{html_body}</body></html>"
+def render(orphans, widows):
+    css = page_css.replace("ORPHANS", str(orphans)).replace("WIDOWS", str(widows))
+    html = f"<html><head><meta charset='utf-8'><style>{css}</style></head><body>{html_body}</body></html>"
+    return html, weasyprint.HTML(string=html, base_url=".").render()
+
+
+def misplaced_footnotes(document):
+    page_of = {}
+    for i, page in enumerate(document.pages):
+        for anchor in page.anchors:
+            page_of[anchor] = i
+    return [n for n in range(1, len(footnote_texts) + 1)
+            if page_of.get(f"fn-{n}") != page_of.get(f"fnref-{n}")]
+
+
+# WeasyPrint sometimes defers a footnote to the page after its call when a
+# widows/orphans adjustment re-flows that page, and does so silently. Try a
+# few widows/orphans settings and keep the first where every footnote shares
+# a page with its call.
+settings = [(2, 2)] + [(o, w) for o in (1, 2, 3, 4) for w in (1, 2, 3, 4) if (o, w) != (2, 2)]
+for orphans, widows in settings:
+    html_doc, document = render(orphans, widows)
+    bad = misplaced_footnotes(document)
+    if not bad:
+        break
+    print(f"orphans={orphans} widows={widows}: footnotes on wrong page: {bad}")
+else:
+    raise SystemExit(f"No setting kept every footnote on its call's page; still misplaced: {bad}")
 
 with open("_petition_render.html", "w") as f:
     f.write(html_doc)
 
-weasyprint.HTML(string=html_doc, base_url=".").write_pdf("Petition_for_Rulemaking.pdf")
-print("PDF written: Petition_for_Rulemaking.pdf")
+document.write_pdf("Petition_for_Rulemaking.pdf")
+print(f"PDF written: Petition_for_Rulemaking.pdf (orphans={orphans}, widows={widows}, {len(document.pages)} pages)")
 print("Footnotes found:", len(footnote_texts))
