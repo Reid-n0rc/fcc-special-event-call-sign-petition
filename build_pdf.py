@@ -100,11 +100,17 @@ page_css = """
  * - No decorative color or shading; black text and rules only. Redlines to
  *   the proposed rule text use underline for insertions (no color).
  */
+/* 47 CFR 1.49(a): printed material, page numbers included, must fit within
+   6.5 x 9.5 in. The page number sits at the top of the bottom margin box
+   instead of centered in it, which would put it 0.44 in from the edge and
+   make the printed area about 9.56 in tall. */
 @page normal {
     size: letter;
     margin: 1in;
     @bottom-center {
         content: counter(page);
+        vertical-align: top;
+        padding-top: 0.2in;
         font-family: "Times New Roman", Times, "Hiragino Mincho ProN", "Hiragino Sans", "Noto Serif CJK JP", "Noto Sans CJK JP", serif;
         font-size: 12pt;
     }
@@ -125,11 +131,15 @@ page_css = """
    `page: normal` (on body) so that whatever follows a `page: landscape`
    block returns to a fresh portrait page -- without it, WeasyPrint just
    keeps appending normal-flow content onto the last-used page orientation. */
+/* Landscape pages must keep printed material, page number included, within
+   6.5 in of height, so the top margin is larger and the page number sits at
+   the very top of the bottom margin box. */
 @page landscape {
     size: letter landscape;
-    margin: 1in;
+    margin: 1.25in 1in 1in 1in;
     @bottom-center {
         content: counter(page);
+        vertical-align: top;
         font-family: "Times New Roman", Times, "Hiragino Mincho ProN", "Hiragino Sans", "Noto Serif CJK JP", "Noto Sans CJK JP", serif;
         font-size: 12pt;
     }
@@ -189,6 +199,8 @@ p { margin: 0; text-align: left; text-indent: 0.5in; }
 /* Extra breathing room between the closing argument paragraph and
    "Respectfully submitted," -- the signature block's first line. */
 .signature > p:first-child { margin-top: 2em; }
+/* Three blank single-spaced lines between the signature block and the verification. */
+.verification { margin-top: 3.45em; }
 /* "Before the / FEDERAL COMMUNICATIONS COMMISSION / Washington, DC 20554" --
    the very first paragraph in the front matter. */
 .frontmatter > p:first-child { text-align: center; font-weight: bold; }
@@ -201,7 +213,7 @@ li p { text-align: left; }
     text-align: center;
     margin-bottom: 8pt;
 }
-table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 12pt; line-height: 1.3; }
+table { border-collapse: collapse; width: 100%; margin: 12pt 0; font-size: 12pt; line-height: 1.35; }
 /* Never split a single row's cells across a page break -- without this, a
    row can leave some cells' content on one page and the rest blank on the
    next. */
@@ -270,9 +282,15 @@ ol, ul { margin: 0 0 12pt 0; }
    clickable. */
 .fn a:not(.fnnum) { color: #000; text-decoration: none; }
 
+/* The browser default for <sup> adds its own raise and shrinks the text;
+   reset it so only the 0.3em raise below applies, at full 12pt. */
+sup.fnref { vertical-align: baseline; font-size: 12pt; }
 .fnref a, .fn .fnnum {
-    font-size: 8pt;
-    vertical-align: super;
+    /* 12pt: 47 CFR 1.49(a) requires all printed material to be at least 12-point.
+       A small fixed raise instead of vertical-align: super, which lifts 12pt
+       numerals nearly a full line and spreads the surrounding lines apart. */
+    font-size: 12pt;
+    vertical-align: 0.3em;
     text-decoration: none;
     color: #000;
 }
