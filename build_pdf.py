@@ -241,10 +241,13 @@ ol, ul { margin: 0 0 12pt 0; }
 .fnref a, .fn .fnnum {
     font-size: 8pt;
     vertical-align: super;
-    line-height: 0;
     text-decoration: none;
     color: #000;
 }
+/* line-height: 0 previously applied here (a leftover from the earlier
+   CSS-generated-content design) collapsed these real <a> links' clickable
+   hit area to zero height in the rendered PDF -- they looked right but
+   were unclickable. Do not reintroduce it on the anchor itself. */
 .fn .fnnum { margin-right: 3px; }
 /* Suppress WeasyPrint's own auto-generated "1." marker in front of each
    floated footnote -- .fnnum above is our real, clickable replacement. */
