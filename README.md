@@ -11,6 +11,13 @@ This repository contains a draft Petition for Rulemaking asking the Federal Comm
 - [`FORMATTING.md`](./FORMATTING.md) — the detailed PDF formatting/style spec referenced by `AGENTS.md`, including several conventions that exist specifically to prevent bugs that shipped once (doubled footnote numbers, unclickable footnote links, a list silently rendering as a code block).
 - [`sources/`](./sources/) — primary-source PDFs (FCC orders, ARRL's actual 2010 comments) the petitioner supplied during drafting, so citations can be checked against the real filings. See `sources/README.md` for what each one is and where it's cited.
 
+## License
+
+[Apache License 2.0](./LICENSE), covering the contents of this repository (the drafting
+tooling and this repo's own text). Once `PETITION.md` is filed with the FCC, the filing
+itself becomes a public record under the Commission's own rules, independent of this
+repository's license.
+
 ## Status
 
 This is a **draft** prepared with AI research assistance. Before filing with the FCC:
