@@ -39,7 +39,9 @@ jobs:
             fonts-noto-cjk
 
       - name: Install Python dependencies
-        run: pip install markdown weasyprint
+        # Pinned: build_pdf.py patches a WeasyPrint internal (footnote placement)
+        # and checks that the patch still matches this exact version.
+        run: pip install markdown weasyprint==70.0
 
       - name: Build PDF
         run: python3 build_pdf.py

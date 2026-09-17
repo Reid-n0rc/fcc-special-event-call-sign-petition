@@ -132,7 +132,7 @@ page_css = """
         margin-top: 6pt;
     }
 }
-body { page: normal; orphans: ORPHANS; widows: WIDOWS; }
+body { page: normal; orphans: 2; widows: 2; }
 .landscape-table { page: landscape; }
 html {
     font-family: "Times New Roman", Times, "Hiragino Mincho ProN", "Hiragino Sans", "Noto Serif CJK JP", "Noto Sans CJK JP", serif;
@@ -284,10 +284,25 @@ ol, ul { margin: 0 0 12pt 0; }
 ::footnote-call { content: normal; }
 """
 
-def render(orphans, widows):
-    css = page_css.replace("ORPHANS", str(orphans)).replace("WIDOWS", str(widows))
-    html = f"<html><head><meta charset='utf-8'><style>{css}</style></head><body>{html_body}</body></html>"
-    return html, weasyprint.HTML(string=html, base_url=".").render()
+def disable_footnote_pushback():
+    """Stop WeasyPrint from moving already-placed footnotes to the next page.
+
+    When a paragraph reaches the page bottom and breaking before the current
+    line would violate `orphans`, WeasyPrint's _linebox_layout pushes footnotes
+    whose calls are already on the page to the next page to make room for one
+    more line, leaving each such call and its note on different pages. With
+    `report` forced off, the paragraph is broken or moved instead.
+    """
+    import inspect
+    import textwrap
+    from weasyprint.layout import block
+    source = textwrap.dedent(inspect.getsource(block._linebox_layout))
+    target = "report = not context.in_column and can_break_now and not could_break_before"
+    if source.count(target) != 1:
+        raise SystemExit(
+            f"WeasyPrint {weasyprint.__version__}: footnote-placement patch no longer "
+            "matches block._linebox_layout; re-check the patch against this version.")
+    exec(source.replace(target, "report = False"), block.__dict__)
 
 
 def misplaced_footnotes(document):
@@ -299,23 +314,16 @@ def misplaced_footnotes(document):
             if page_of.get(f"fn-{n}") != page_of.get(f"fnref-{n}")]
 
 
-# WeasyPrint sometimes defers a footnote to the page after its call when a
-# widows/orphans adjustment re-flows that page, and does so silently. Try a
-# few widows/orphans settings and keep the first where every footnote shares
-# a page with its call.
-settings = [(2, 2)] + [(o, w) for o in (1, 2, 3, 4) for w in (1, 2, 3, 4) if (o, w) != (2, 2)]
-for orphans, widows in settings:
-    html_doc, document = render(orphans, widows)
-    bad = misplaced_footnotes(document)
-    if not bad:
-        break
-    print(f"orphans={orphans} widows={widows}: footnotes on wrong page: {bad}")
-else:
-    raise SystemExit(f"No setting kept every footnote on its call's page; still misplaced: {bad}")
+disable_footnote_pushback()
+html_doc = f"<html><head><meta charset='utf-8'><style>{page_css}</style></head><body>{html_body}</body></html>"
+document = weasyprint.HTML(string=html_doc, base_url=".").render()
+bad = misplaced_footnotes(document)
+if bad:
+    raise SystemExit(f"Footnotes not on the same page as their calls: {bad}")
 
 with open("_petition_render.html", "w") as f:
     f.write(html_doc)
 
 document.write_pdf("Petition_for_Rulemaking.pdf")
-print(f"PDF written: Petition_for_Rulemaking.pdf (orphans={orphans}, widows={widows}, {len(document.pages)} pages)")
+print(f"PDF written: Petition_for_Rulemaking.pdf ({len(document.pages)} pages)")
 print("Footnotes found:", len(footnote_texts))
